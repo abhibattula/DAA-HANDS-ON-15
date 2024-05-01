@@ -2,19 +2,18 @@
 #include <stdlib.h>
 #include <limits.h>
 
-// Structure to represent an edge in the graph
+
 struct Edge {
     int src, dest, weight;
 };
 
-// Structure to represent the graph
 struct Graph {
     int numVertices, numEdges;
     struct Edge* edges;
 };
 
-// Function to create a graph with 'numVertices' vertices and 'numEdges' edges
-struct Graph* createGraph(int numVertices, int numEdges) {
+struct Graph* createGraph(int numVertices, int numEdges) 
+{
     struct Graph* graph = (struct Graph*)malloc(sizeof(struct Graph));
     graph->numVertices = numVertices;
     graph->numEdges = numEdges;
@@ -22,7 +21,7 @@ struct Graph* createGraph(int numVertices, int numEdges) {
     return graph;
 }
 
-// Function to perform Bellman-Ford algorithm
+
 void bellmanFord(struct Graph* graph, int src) {
     int numVertices = graph->numVertices;
     int numEdges = graph->numEdges;
@@ -34,37 +33,44 @@ void bellmanFord(struct Graph* graph, int src) {
     }
     dist[src] = 0;
 
-    // Relax all edges |V| - 1 times
-    for (int i = 1; i <= numVertices - 1; ++i) {
-        for (int j = 0; j < numEdges; ++j) {
+  
+    for (int i = 1; i <= numVertices - 1; ++i) 
+    {
+        for (int j = 0; j < numEdges; ++j) 
+        {
             int u = graph->edges[j].src;
             int v = graph->edges[j].dest;
             int weight = graph->edges[j].weight;
-            if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+            if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) 
+            {
                 dist[v] = dist[u] + weight;
             }
         }
     }
 
-    // Check for negative-weight cycles
-    for (int i = 0; i < numEdges; ++i) {
+
+    for (int i = 0; i < numEdges; ++i) 
+    {
         int u = graph->edges[i].src;
         int v = graph->edges[i].dest;
         int weight = graph->edges[i].weight;
-        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) 
+        {
             printf("Graph contains negative-weight cycle\n");
             return;
         }
     }
 
-    // Print the shortest distances
+
     printf("Vertex   Distance from Source\n");
-    for (int i = 0; i < numVertices; ++i) {
+    for (int i = 0; i < numVertices; ++i) 
+    {
         printf("%d -> %d\n", i, dist[i]);
     }
 }
 
-int main() {
+int main() 
+{
     int numVertices, numEdges;
     printf("Enter the number of vertices: ");
     scanf("%d", &numVertices);
@@ -75,7 +81,8 @@ int main() {
     struct Graph* graph = createGraph(numVertices, numEdges);
 
     printf("Enter the edges (source destination weight):\n");
-    for (int i = 0; i < numEdges; ++i) {
+    for (int i = 0; i < numEdges; ++i) 
+    {
         int src, dest, weight;
         scanf("%d %d %d", &src, &dest, &weight);
         graph->edges[i].src = src;
